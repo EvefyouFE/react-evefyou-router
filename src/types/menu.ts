@@ -25,3 +25,8 @@ export interface MenuItem {
 }
 
 export type MenuTreeList = MenuItem[];
+
+export interface CrumbData {
+    title: string;
+    menuTreeList?: MenuTreeList;
+}

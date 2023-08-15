@@ -7,4 +7,3 @@
  * Copyright (c) 2023 by EvefyouFE/evef, All Rights Reserved. 
  */
 export * from './crRoutes';
-export type { CrumbData } from './props'

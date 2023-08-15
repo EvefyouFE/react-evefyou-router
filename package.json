@@ -1,0 +1,66 @@
+{
+  "name": "react-evefyou-router",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "./dist/index.cjs.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "build:tsc": "tsc",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EvefyouFE/react-evefyou-router.git"
+  },
+  "keywords": [
+    "react",
+    "conventional",
+    "dynamic",
+    "router",
+    "evefyou"
+  ],
+  "author": "EvefyouFE",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/EvefyouFE/react-evefyou-router/issues"
+  },
+  "homepage": "https://github.com/EvefyouFE/react-evefyou-router#readme",
+  "peerDependencies": {
+    "ramda": ">=0.29.0",
+    "react": ">=18.2.0",
+    "react-dom": ">=18.2.0",
+    "react-router": ">=6.10.0",
+    "react-router-dom": ">=6.10.0"
+  },
+  "devDependencies": {
+    "@rollup/plugin-typescript": "^11.1.2",
+    "@types/node": "^20.4.9",
+    "@types/ramda": "^0.29.0",
+    "@types/react": "^18.2.15",
+    "@types/react-dom": "^18.2.7",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "@vitejs/plugin-react": "^4.0.3",
+    "eslint": "^8.45.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.3",
+    "tslib": "^2.6.1",
+    "typescript": "^5.1.6",
+    "vite": "^4.4.5",
+    "vite-plugin-dts": "^3.5.1"
+  }
+}

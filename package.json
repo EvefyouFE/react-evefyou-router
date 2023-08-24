@@ -1,15 +1,15 @@
 {
   "name": "react-evefyou-router",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "",
   "type": "module",
-  "main": "./cjs/index.cjs.js",
+  "main": "./cjs/index.js",
   "module": "./es/index.js",
   "types": "./index.d.ts",
   "exports": {
     ".": {
       "import": "./es/index.js",
-      "require": "./cjs/index.cjs.js",
+      "require": "./cjs/index.js",
       "types": "./index.d.ts"
     }
   },
@@ -67,6 +67,7 @@
     "tslib": "^2.6.1",
     "typescript": "^5.1.6",
     "vite": "^4.4.5",
-    "vite-plugin-dts": "^3.5.1"
+    "vite-plugin-dts": "^3.5.1",
+    "vite-tsconfig-paths": "^4.2.0"
   }
 }

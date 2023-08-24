@@ -1,6 +1,6 @@
 {
   "name": "react-evefyou-router",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "",
   "type": "module",
   "main": "./cjs/index.cjs.js",
@@ -9,7 +9,8 @@
   "exports": {
     ".": {
       "import": "./es/index.js",
-      "require": "./cjs/index.cjs.js"
+      "require": "./cjs/index.cjs.js",
+      "types": "./index.d.ts"
     }
   },
   "files": [

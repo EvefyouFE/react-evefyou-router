@@ -15,8 +15,8 @@ dependencies:
     specifier: '>=18.2.0'
     version: 18.2.0(react@18.2.0)
   react-evefyou-common:
-    specifier: '>=1.0.5'
-    version: 1.0.5(moment@2.29.4)(react-dom@18.2.0)(react-intl@6.4.4)(react@18.2.0)(uuid@9.0.0)
+    specifier: '>=1.0.6'
+    version: 1.0.6(moment@2.29.4)(react-dom@18.2.0)(react-intl@6.4.4)(react@18.2.0)(uuid@9.0.0)
   react-router:
     specifier: '>=6.10.0'
     version: 6.10.0(react@18.2.0)
@@ -2042,8 +2042,8 @@ packages:
       scheduler: 0.23.0
     dev: false
 
-  /react-evefyou-common@1.0.5(moment@2.29.4)(react-dom@18.2.0)(react-intl@6.4.4)(react@18.2.0)(uuid@9.0.0):
-    resolution: {integrity: sha512-anTAKffdINK2cXetQOHcTtdBqraEQDcGb0Kpc8IwT9voNgPnThcH1Ekkc/Na3eBXBXetu9IOcAM3Y7TAGQDPMA==}
+  /react-evefyou-common@1.0.6(moment@2.29.4)(react-dom@18.2.0)(react-intl@6.4.4)(react@18.2.0)(uuid@9.0.0):
+    resolution: {integrity: sha512-f6HpPU9Prx8wOXtdcYUgRs0ZMKuMwECN0YHPx3gBKy9apkluITaaM2iMaDeWuc7ZVgGmgpEXnx+JUhBCufsAIQ==}
     peerDependencies:
       moment: '>=2.29.4'
       react: '>=18.2.0'

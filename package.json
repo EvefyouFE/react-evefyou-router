@@ -1,6 +1,6 @@
 {
   "name": "react-evefyou-router",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "description": "",
   "type": "module",
   "main": "./cjs/index.js",
@@ -51,7 +51,7 @@
     "react-dom": ">=18.2.0",
     "react-router": ">=6.10.0",
     "react-router-dom": ">=6.10.0",
-    "react-evefyou-common": ">=1.0.6"
+    "react-evefyou-common": ">=1.0.8"
   },
   "devDependencies": {
     "@types/node": "^20.4.9",

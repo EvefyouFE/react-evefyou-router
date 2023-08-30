@@ -15,8 +15,8 @@ dependencies:
     specifier: '>=18.2.0'
     version: 18.2.0(react@18.2.0)
   react-evefyou-common:
-    specifier: '>=1.0.6'
-    version: 1.0.6(moment@2.29.4)(react-dom@18.2.0)(react-intl@6.4.4)(react@18.2.0)(uuid@9.0.0)
+    specifier: '>=1.0.8'
+    version: 1.0.8(moment@2.29.4)(ramda@0.29.0)(react-dom@18.2.0)(react-intl@6.4.4)(react@18.2.0)(uuid@9.0.0)
   react-router:
     specifier: '>=6.10.0'
     version: 6.10.0(react@18.2.0)
@@ -2042,16 +2042,18 @@ packages:
       scheduler: 0.23.0
     dev: false
 
-  /react-evefyou-common@1.0.6(moment@2.29.4)(react-dom@18.2.0)(react-intl@6.4.4)(react@18.2.0)(uuid@9.0.0):
-    resolution: {integrity: sha512-f6HpPU9Prx8wOXtdcYUgRs0ZMKuMwECN0YHPx3gBKy9apkluITaaM2iMaDeWuc7ZVgGmgpEXnx+JUhBCufsAIQ==}
+  /react-evefyou-common@1.0.8(moment@2.29.4)(ramda@0.29.0)(react-dom@18.2.0)(react-intl@6.4.4)(react@18.2.0)(uuid@9.0.0):
+    resolution: {integrity: sha512-TOhDKT2DPNjNaqBQENt/T946tiKyTrkInCuJXvTMUoqzL8j3Oj1nbyp/siv4Bh2kJj4BPiTDl4TDuseNupsquw==}
     peerDependencies:
       moment: '>=2.29.4'
+      ramda: '>=0.29.0'
       react: '>=18.2.0'
       react-dom: '>=18.2.0'
       react-intl: '>=6.4.4'
       uuid: '>=9.0.0'
     dependencies:
       moment: 2.29.4
+      ramda: 0.29.0
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       react-intl: 6.4.4(react@18.2.0)(typescript@5.1.6)

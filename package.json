@@ -1,22 +1,14 @@
 {
   "name": "react-evefyou-router",
-  "version": "1.0.13",
+  "version": "1.0.15",
   "description": "",
   "type": "module",
   "main": "./cjs/index.js",
   "module": "./es/index.js",
-  "types": "./index.d.ts",
-  "exports": {
-    ".": {
-      "import": "./es/index.js",
-      "require": "./cjs/index.js",
-      "types": "./index.d.ts"
-    }
-  },
+  "types": "./es/index.d.ts",
   "files": [
     "es",
-    "cjs",
-    "index.d.ts"
+    "cjs"
   ],
   "scripts": {
     "dev": "vite",

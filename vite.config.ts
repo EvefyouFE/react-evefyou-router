@@ -8,12 +8,12 @@
  */
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-// import path from "path";
+import path from "path";
 import dts from 'vite-plugin-dts';
 import pkg from './package.json';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
-// const pathResolve = (v: string) => path.resolve(__dirname, v)
+const pathResolve = (v: string) => path.resolve(__dirname, v)
 
 const externalPackages = [...Object.keys(pkg.peerDependencies)]
 const regexOfPackages = externalPackages
@@ -23,14 +23,17 @@ export default defineConfig({
   plugins: [
     react(),
     tsconfigPaths(),
-    dts({ rollupTypes: true })
+    dts({
+      outDir: ['es', 'cjs'],
+      rollupTypes: true
+    })
   ],
   build: {
     minify: true,
     reportCompressedSize: true,
     outDir: '.',
     lib: {
-      entry: 'src/index.ts',
+      entry: pathResolve('src/index.ts'),
       fileName(format) {
         return `${format}/index.js`
       },

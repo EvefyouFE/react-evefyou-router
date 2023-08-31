@@ -1,5 +1,4 @@
 import { LazyRouteFunction } from 'react-router';
-import { Recordable } from 'react-evefyou-common';
 import { RouteObject } from 'react-router';
 
 export declare type CrRouteObject = Omit<RouteObject, 'children' | 'lazy'> & Omit<RouteMenuItem, 'path'> & {
@@ -68,6 +67,8 @@ export declare type PageModule = {
     default: React.ComponentType<Recordable | object>;
     [key: string]: React.ComponentType<Recordable | object>;
 };
+
+declare type Recordable<T = any> = Record<string, T>;
 
 export declare interface RouteMenuItem {
     name?: string;

@@ -40,6 +40,9 @@ export interface CrRouteOptions {
     path?: string;
     wrapComponent?: WrapComponent;
     errorElement?: React.ReactNode;
+    element?: React.ReactNode;
+    name?: string;
+    locale?: string;
     loader?: () => Promise<any>;
     handleFn?: GlobHandleFn;
     isIndex?: boolean;

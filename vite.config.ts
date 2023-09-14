@@ -30,6 +30,7 @@ export default defineConfig({
   ],
   build: {
     minify: true,
+    sourcemap: true,
     reportCompressedSize: true,
     outDir: '.',
     lib: {

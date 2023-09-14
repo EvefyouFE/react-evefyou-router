@@ -6,14 +6,15 @@
  * Everyone is coming to the world i live in, as i am going to the world lives for you. 人人皆往我世界，我为世界中人人。
  * Copyright (c) 2023 by EvefyouFE/evef, All Rights Reserved. 
  */
-import { assocPath, identity, join, keys, last, map, omit, pickBy, pipe, split, take, uniq, useWith } from 'ramda';
+import { add, append, assocPath, concat, find, flip, head, includes, indexOf, join, keys, last, map, omit, pickBy, pipe, split, take, uniq } from 'ramda';
 import { LazyRouteFunction, RouteObject } from "react-router";
 import { crumbLoaderFn } from './props';
 import { defaultWrapComponent } from './props/element';
-import { CrRouteObject, CrRouteOptions, CrRouteViewConfig, LazyModuleFn, ModulesObject, PageModule, RouteModulesObject, RoutePathConfig } from "../types/route";
+import { CrRouteObject, CrRouteOptions, CrRouteViewConfig, LazyModuleFn, ModulesObject, PageModule, RouteModulesObject, RoutePathConfig } from "../types";
 
 /**
- * 
+ * routePaths: [$]  [a, b, index] ...
+ * paths: [] [/a, /a/b, /a/b/index] ... 
  * @param filePath 
  * @param excludePath 
  * @returns [routePaths, 带'/'的routePaths]
@@ -46,6 +47,7 @@ function handleFilePath(filePath: string, excludePath = ''): string[][] {
 function generatePathConfig(modules: ModulesObject, excludePath: string): RouteModulesObject {
     return Object.keys(modules).reduce((acc, filePath) => {
         const pathss = handleFilePath(filePath, excludePath)
+        console.log('pathss', pathss)
         return assocPath(pathss[1].length === 0 ? pathss[0] : pathss[1], modules[filePath], acc);
     }, {});
 }
@@ -118,8 +120,8 @@ function mapPathConfigToRoute(
  * @param routes 
  * @returns 
  */
-function handleRoutesUndefinedPath(routes?: CrRouteObject[]): CrRouteObject[] | undefined {
-    return routes && routes.reduce((acc, cur) => {
+function handleRoutesUndefinedPath(routes: CrRouteObject[] = []): CrRouteObject[] {
+    return routes.reduce((acc, cur) => {
         if (cur && cur.children && cur.children.length === 1 && cur.children[0].path === undefined) {
             return [...acc, {
                 ...cur,
@@ -150,21 +152,23 @@ function generateCrRoute(
         wrapComponent = defaultWrapComponent,
         loader,
         errorElement,
-        handleFn,
         isIndex,
+        element,
+        locale = isIndex ? 'menu.home' : undefined,
+        name = isIndex ? 'home' : undefined,
+        handleFn,
         path
     } = options
-    const locale = isIndex ? 'menu.home' : undefined
-    const name = isIndex ? 'home' : undefined
     const handle = isIndex ? handleFn?.({ locale, path }) : undefined
 
     const { $: $viewFn, ...viewsPathConfig } = generatePathConfig(viewModules as ModulesObject, dirPath);
     const viewRoutes = mapPathConfigToRoute(viewsPathConfig as RoutePathConfig, options);
     const viewRoutesWithoutUndefined = handleRoutesUndefinedPath(viewRoutes);
-    const lazyView = ($viewFn as LazyModuleFn)()
+    const lazy = !element ? async () => ({ Component: wrapComponent((await ($viewFn as LazyModuleFn)()).default) }) : undefined
     return {
-        lazy: async () => ({ Component: wrapComponent((await lazyView).default) }),
+        lazy,
         children: viewRoutesWithoutUndefined,
+        element,
         errorElement,
         loader,
         handle,
@@ -176,21 +180,31 @@ function generateCrRoute(
 
 export function generateCrRoutes(modules: Record<string, () => Promise<PageModule>>, config: CrRouteViewConfig): CrRouteObject[] {
     // const modules = import.meta.glob<PageModule>('/src/pages/**/$*.{ts,tsx}')
-    const extractModules = (
+    const viewIdx = pipe(
+        keys,
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        find(includes('views')),
+        split('/'),
+        indexOf('views'),
+        add(1)
+    )(modules) as number
+    const transformModuleToRoute = (
         v: string
     ) => {
         const view = pipe(
             split('/'),
-            take(4),
+            take(viewIdx),
             last
         )(v) as string
         const {
             isIndex = view === 'views',
             path = isIndex ? '/' : '/'.concat(view),
             ...rest
-        } = Object.keys(config).filter(k => v.includes(k)).map(k => config[k])[0]
+        } = config[view]
+        const viewModules = pickBy((_, k) => includes(view, k))(modules) as any
         return generateCrRoute(
-            pickBy((_, k) => k.includes(v), modules),
+            viewModules,
             v,
             {
                 ...rest,
@@ -198,36 +212,64 @@ export function generateCrRoutes(modules: Record<string, () => Promise<PageModul
                 path
             } as CrRouteOptions
         )
-
     }
-
-    const concatStr = (v: string) => v.concat('/')
-    const getRoutes = pipe(
+    const pagePaths = pipe(
         keys,
         map(
             pipe(
                 split('/'),
-                take(4),
+                take(viewIdx),
+                append(['']),
                 join('/'),
-                // eslint-disable-next-line react-hooks/rules-of-hooks
-                useWith(concatStr, [identity])
             )
         ),
-        uniq,
-        map(
-            pipe(
-                // eslint-disable-next-line react-hooks/rules-of-hooks
-                useWith(extractModules, [identity]),
-            )
-        )
-    )
-    return getRoutes(modules)
+        uniq
+    )(modules)
+    const defaultRoutes = keys(config).reduce((acc, k) => {
+        if (!pagePaths.find(p => p.includes(k as string))) {
+            const {
+                path = '/'.concat(k as string),
+                ...rest
+            } = config[k]
+            acc.push({
+                ...rest,
+                path
+            })
+        }
+        return acc
+    }, [] as CrRouteObject[])
+    const routes = pipe(
+        map(transformModuleToRoute),
+        concat(defaultRoutes)
+    )(pagePaths)
+    return routes
+}
+export function generateViewCrRoutes(viewModules: Record<string, () => Promise<PageModule>>, options: CrRouteOptions): CrRouteObject[] {
+    const dirPath = pipe(
+        keys,
+        head,
+        split('views'),
+        head,
+        flip<string, string, string>(concat)('views/')
+    )(viewModules)
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const viewsPathConfig = generatePathConfig(viewModules as ModulesObject, dirPath);
+    const viewRoutes = mapPathConfigToRoute(viewsPathConfig as RoutePathConfig, options);
+    const viewRoutesWithoutUndefined = handleRoutesUndefinedPath(viewRoutes);
+    return viewRoutesWithoutUndefined
 }
 
 export function generateCrViewsPaths(viewModules: Record<string, () => Promise<PageModule>>) {
     // const viewModules = import.meta.glob('/src/pages/views/**/$*.{ts,tsx}');
+    const dirPath = pipe(
+        keys,
+        head,
+        split('views'),
+        head,
+        flip<string, string, string>(concat)('views/')
+    )(viewModules)
     return Object.keys(viewModules as object).reduce((acc, filePath) => {
-        const pathss = handleFilePath(filePath, '/src/pages/views/');
+        const pathss = handleFilePath(filePath, dirPath);
         const paths = pathss[1];
         const path = paths?.length > 0 && paths[paths.length - 1]
         if (path && path !== '/index')
@@ -235,8 +277,6 @@ export function generateCrViewsPaths(viewModules: Record<string, () => Promise<P
         return acc;
     }, [] as string[]);
 }
-
-// export const viewsPaths = generateCrViewsPaths();
 
 
 

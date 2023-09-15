@@ -47,7 +47,6 @@ function handleFilePath(filePath: string, excludePath = ''): string[][] {
 function generatePathConfig(modules: ModulesObject, excludePath: string): RouteModulesObject {
     return Object.keys(modules).reduce((acc, filePath) => {
         const pathss = handleFilePath(filePath, excludePath)
-        console.log('pathss', pathss)
         return assocPath(pathss[1].length === 0 ? pathss[0] : pathss[1], modules[filePath], acc);
     }, {});
 }

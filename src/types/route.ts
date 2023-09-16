@@ -47,6 +47,6 @@ export interface CrRouteOptions {
     handleFn?: GlobHandleFn;
     isIndex?: boolean;
 }
-export type CrRouteViewConfig = {
+export type CrRouteConfig = {
     [key: string]: CrRouteOptions;
 }

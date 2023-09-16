@@ -10,7 +10,7 @@ import { add, append, assocPath, concat, find, flip, head, includes, indexOf, jo
 import { LazyRouteFunction, RouteObject } from "react-router";
 import { crumbLoaderFn } from './props';
 import { defaultWrapComponent } from './props/element';
-import { CrRouteObject, CrRouteOptions, CrRouteViewConfig, LazyModuleFn, ModulesObject, PageModule, RouteModulesObject, RoutePathConfig } from "../types";
+import { CrRouteObject, CrRouteOptions, CrRouteConfig, LazyModuleFn, ModulesObject, PageModule, RouteModulesObject, RoutePathConfig } from "../types";
 
 /**
  * routePaths: [$]  [a, b, index] ...
@@ -177,7 +177,7 @@ function generateCrRoute(
     } as CrRouteObject
 }
 
-export function generateCrRoutes(modules: Record<string, () => Promise<PageModule>>, config: CrRouteViewConfig, dirName = 'views'): CrRouteObject[] {
+export function generateCrRoutes(modules: Record<string, () => Promise<PageModule>>, config: CrRouteConfig, dirName = 'views'): CrRouteObject[] {
     const viewIdx = pipe(
         keys,
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment

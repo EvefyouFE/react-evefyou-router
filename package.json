@@ -1,6 +1,6 @@
 {
   "name": "react-evefyou-router",
-  "version": "0.0.1",
+  "version": "1.0.29",
   "description": "",
   "type": "module",
   "main": "./cjs/index.js",

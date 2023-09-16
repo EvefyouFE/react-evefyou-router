@@ -177,15 +177,14 @@ function generateCrRoute(
     } as CrRouteObject
 }
 
-export function generateCrRoutes(modules: Record<string, () => Promise<PageModule>>, config: CrRouteViewConfig): CrRouteObject[] {
-    // const modules = import.meta.glob<PageModule>('/src/pages/**/$*.{ts,tsx}')
+export function generateCrRoutes(modules: Record<string, () => Promise<PageModule>>, config: CrRouteViewConfig, dirName = 'views'): CrRouteObject[] {
     const viewIdx = pipe(
         keys,
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        find(includes('views')),
+        find(includes(dirName)),
         split('/'),
-        indexOf('views'),
+        indexOf(dirName),
         add(1)
     )(modules) as number
     const transformModuleToRoute = (
@@ -197,7 +196,7 @@ export function generateCrRoutes(modules: Record<string, () => Promise<PageModul
             last
         )(v) as string
         const {
-            isIndex = view === 'views',
+            isIndex = view === dirName,
             path = isIndex ? '/' : '/'.concat(view),
             ...rest
         } = config[view]
@@ -258,16 +257,15 @@ export function generateViewCrRoutes(viewModules: Record<string, () => Promise<P
     return viewRoutesWithoutUndefined
 }
 
-export function generateCrViewsPaths(viewModules: Record<string, () => Promise<PageModule>>) {
-    // const viewModules = import.meta.glob('/src/pages/views/**/$*.{ts,tsx}');
+export function getPageModulePaths(modules: Record<string, () => Promise<PageModule>>, dirName = 'views') {
     const dirPath = pipe(
         keys,
         head,
-        split('views'),
+        split(dirName),
         head,
-        flip<string, string, string>(concat)('views/')
-    )(viewModules)
-    return Object.keys(viewModules as object).reduce((acc, filePath) => {
+        flip<string, string, string>(concat)(dirName.concat('/'))
+    )(modules)
+    return Object.keys(modules as object).reduce((acc, filePath) => {
         const pathss = handleFilePath(filePath, dirPath);
         const paths = pathss[1];
         const path = paths?.length > 0 && paths[paths.length - 1]

@@ -4,19 +4,19 @@
   </a>
 </p>
 
-<h1 align="center">React-Evefyou-Router</h1>
+<h1 align="center">React-Evefyou-App</h1>
 
 <div align="left">
 
-基于 Vite 的约定式路由树生成库
+Conventional routing tree generation library based on Vite and react-router6+
 
 </div>
 
 中文 | [English](./README.md)
 
-## ✨ Feature
+## ✨ 特性
 
-- Based on the conventional routing of Vite and react-router6+, use import.meta.glob to generate PageModule according to the directory structure, and automatically convert it into a routing tree
+- 基于 Vite 和 react-router6+ 的约定式路由，根据目录结构使用 import.meta.glob 生成 PageModule，自动解析为路由树
 
 ## 📦 Install
 
@@ -32,7 +32,7 @@ yarn add react-evefyou-router
 pnpm add react-evefyou-router
 ```
 
-## 🔨 Usage
+## 🔨 使用
 
 ```
 import {generateCrRoutes, PageModule, CrRouteObject, CrRouteConfig} from 'react-evefyou-router'
@@ -50,10 +50,10 @@ const routesConfig: CrRouteConfig = {
 const routes: CrRouteObject[] = generateCrRoutes(modules, routesConfig)
 ```
 
-### modules format
+### modules 格式
 
 ```
-Parse files prefixed with $, as long as they meet the format, it does not need to be Vite
+解析以$为前缀的文件，满足格式即可，可以不是 Vite
 ```
 
 ```
@@ -64,15 +64,15 @@ Parse files prefixed with $, as long as they meet the format, it does not need t
 }
 ```
 
-### Conventional Routing Page structure
+### 约定目录结构
 
-| file       | description                     |
-| ---------- | ------------------------------- |
-| $.ts       | Layout（nested Outlet if need） |
-| $index.ts  | default page                    |
-| $other.tsx |                                 |
+| 格式      | 说明                       |
+| --------- | -------------------------- |
+| $.ts      | Layout 层（可嵌套 Outlet） |
+| $index.ts | 默认页面                   |
+| $其他     | 默认页面                   |
 
-#### common example
+#### 通用例子
 
 ```
 - pages
@@ -90,7 +90,7 @@ Parse files prefixed with $, as long as they meet the format, it does not need t
         $.ts
 ```
 
-#### simple example
+#### 最简例子
 
 ```
 - views
